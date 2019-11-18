@@ -99,7 +99,7 @@ def user_input():
         parser.add_argument('-pp', '--print_paths', default=False, help="Prints the list of absolute paths of the images",action="store_true")
         parser.add_argument('-m', '--metadata', default=False, help="Print the metadata of the image", action="store_true")
         parser.add_argument('-e', '--extract_metadata', default=False, help="Dumps all the logs into a text file", action="store_true")
-        parser.add_argument('-ep', '--extract_metadata_path', default=False, help="Specifies the path for the metadata textfile", action="store_true")
+        parser.add_argument('-ep', '--extract_metadata_path', default=False, help="Specifies the path for the metadata textfile", type=str, required=False)
         parser.add_argument('-st', '--socket_timeout', default=False, help="Connection timeout waiting for the image to download", type=float)
         parser.add_argument('-th', '--thumbnail', default=False, help="Downloads image thumbnail along with the actual image", action="store_true")
         parser.add_argument('-tho', '--thumbnail_only', default=False, help="Downloads only thumbnail without downloading actual images", action="store_true")
@@ -956,7 +956,6 @@ class googleimagesdownload:
                     #dumps into a json file
                     if arguments['extract_metadata']:
                         if arguments['extract_metadata_path']:
-                            import ipdb; ipdb.set_trace()
                             position = 0
                             while position < len(abs_path):
                                 items[position]["image_path"] = abs_path[position]

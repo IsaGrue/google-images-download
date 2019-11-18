@@ -956,7 +956,7 @@ class googleimagesdownload:
                     #dumps into a json file
                     if arguments['extract_metadata']:
                         if arguments['extract_metadata_path']:
-
+                            import ipdb; ipdb.set_trace()
                             position = 0
                             while position < len(abs_path):
                                 items[position]["image_path"] = abs_path[position]

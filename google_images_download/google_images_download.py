@@ -38,7 +38,7 @@ args_list = ["keywords", "keywords_from_file", "prefix_keywords", "suffix_keywor
              "limit", "format", "color", "color_type", "usage_rights", "size",
              "exact_size", "aspect_ratio", "type", "time", "time_range", "delay", "url", "single_image",
              "output_directory", "image_directory", "no_directory", "proxy", "similar_images", "specific_site",
-             "print_urls", "print_size", "print_paths", "metadata", "extract_metadata", "socket_timeout",
+             "print_urls", "print_size", "print_paths", "metadata", "extract_metadata", "extract_metadata_path", "socket_timeout",
              "thumbnail", "thumbnail_only", "language", "prefix", "chromedriver", "related_images", "safe_search", "no_numbering",
              "offset", "no_download","save_source","silent_mode","ignore_urls"]
 
@@ -99,6 +99,7 @@ def user_input():
         parser.add_argument('-pp', '--print_paths', default=False, help="Prints the list of absolute paths of the images",action="store_true")
         parser.add_argument('-m', '--metadata', default=False, help="Print the metadata of the image", action="store_true")
         parser.add_argument('-e', '--extract_metadata', default=False, help="Dumps all the logs into a text file", action="store_true")
+        parser.add_argument('-ep', '--extract_metadata_path', default=False, help="Specifies the path for the metadata textfile", action="store_true")
         parser.add_argument('-st', '--socket_timeout', default=False, help="Connection timeout waiting for the image to download", type=float)
         parser.add_argument('-th', '--thumbnail', default=False, help="Downloads image thumbnail along with the actual image", action="store_true")
         parser.add_argument('-tho', '--thumbnail_only', default=False, help="Downloads only thumbnail without downloading actual images", action="store_true")
@@ -954,14 +955,19 @@ class googleimagesdownload:
 
                     #dumps into a json file
                     if arguments['extract_metadata']:
-                        try:
-                            if not os.path.exists("logs"):
-                                os.makedirs("logs")
-                        except OSError as e:
-                            print(e)
-                        json_file = open("logs/"+search_keyword[i]+".json", "w")
-                        json.dump(items, json_file, indent=4, sort_keys=True)
-                        json_file.close()
+                        if arguments['extract_metadata_path']:
+                            json_file = open(arguments['extract_metadata_path']+"/"+search_keyword[i]+".json", "w")
+                            json.dump(items, json_file, indent=4, sort_keys=True)
+                            json_file.close()
+                        else:
+                            try:
+                                if not os.path.exists("metadata"):
+                                    os.makedirs("metadata")
+                            except OSError as e:
+                                print(e)
+                            json_file = open("metadata/"+search_keyword[i]+".json", "w")
+                            json.dump(items, json_file, indent=4, sort_keys=True)
+                            json_file.close()
 
                     #Related images
                     if arguments['related_images']:

@@ -956,6 +956,8 @@ class googleimagesdownload:
                     #dumps into a json file
                     if arguments['extract_metadata']:
                         if arguments['extract_metadata_path']:
+                            for position in len(abs_path):
+                                items[position]["image_path"] = abs_path[position]
                             json_file = open(arguments['extract_metadata_path']+"/"+search_keyword[i]+".json", "w")
                             json.dump(items, json_file, indent=4, sort_keys=True)
                             json_file.close()

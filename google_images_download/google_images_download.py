@@ -960,7 +960,7 @@ class googleimagesdownload:
                             position = 0
                             while position < len(abs_path):
                                 items[position]["image_path"] = abs_path[position]
-                                position = position + 0
+                                position = position + 1
                             json_file = open(arguments['extract_metadata_path']+"/"+search_keyword[i]+".json", "w")
                             json.dump(items, json_file, indent=4, sort_keys=True)
                             json_file.close()
